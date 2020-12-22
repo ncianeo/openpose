@@ -20,6 +20,15 @@ set(EXAMPLE_FILES
 
 include(${CMAKE_SOURCE_DIR}/cmake/Utils.cmake)
 
+set(Boost_USE_STATIC_LIBS OFF) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+find_package(Boost 1.45.0 COMPONENTS filesystem) 
+
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
 foreach(EXAMPLE_FILE ${EXAMPLE_FILES})
 
   get_filename_component(SOURCE_NAME ${EXAMPLE_FILE} NAME_WE)
@@ -32,7 +41,7 @@ foreach(EXAMPLE_FILE ${EXAMPLE_FILES})
 
   message(STATUS "Adding Example ${EXE_NAME}")
   add_executable(${EXE_NAME} ${EXAMPLE_FILE})
-  target_link_libraries(${EXE_NAME} openpose ${examples_3rdparty_libraries})
+  target_link_libraries(${EXE_NAME} openpose ${examples_3rdparty_libraries} ${Boost_LIBRARIES})
 
   if (WIN32)
     set_property(TARGET ${EXE_NAME} PROPERTY FOLDER "Examples/Tutorial/C++ API")

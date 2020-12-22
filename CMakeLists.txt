@@ -893,7 +893,7 @@ if (WITH_FLIR_CAMERA)
   include_directories(SYSTEM ${SPINNAKER_INCLUDE_DIRS}) # To remove its warnings, equiv. to -isystem
 endif (WITH_FLIR_CAMERA)
 if (WITH_3D_ADAM_MODEL)
-                                    include_directories(include/adam) # TODO: TEMPORARY - TO BE REMOVED IN THE FUTURE
+  include_directories(include/adam) # TODO: TEMPORARY - TO BE REMOVED IN THE FUTURE
   include_directories(${CERES_INCLUDE_DIRS})
   include_directories(${EIGEN3_INCLUDE_DIRS})
   set(OpenPose_3rdparty_libraries ${OpenPose_3rdparty_libraries} Eigen3::Eigen)

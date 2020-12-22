@@ -10,6 +10,7 @@
 #include <openpose/flags.hpp>
 // OpenPose dependencies
 #include <openpose/headers.hpp>
+#include <boost/filesystem.hpp>
 
 // Custom OpenPose flags
 // Producer
@@ -180,7 +181,16 @@ int tutorialApiCpp()
         // Process and display image
         const cv::Mat cvImageToProcess = cv::imread(FLAGS_image_path);
         const op::Matrix imageToProcess = OP_CV2OPCONSTMAT(cvImageToProcess);
-        auto datumProcessed = opWrapper.emplaceAndPop(imageToProcess);
+        auto datumProcessed = std::make_shared<std::vector<std::shared_ptr<op::Datum>>>();
+        datumProcessed->emplace_back();
+        auto& tDatumPtr = datumProcessed->at(0);
+        tDatumPtr = std::make_shared<op::Datum>();
+        // Fill datum
+        tDatumPtr->cvInputData = imageToProcess;
+        boost::filesystem::path p(FLAGS_image_path);
+        tDatumPtr->name = p.stem().string();
+        opWrapper.emplaceAndPop(datumProcessed);
+        // auto datumProcessed = opWrapper.emplaceAndPop(imageToProcess);
         if (datumProcessed != nullptr)
         {
             printKeypoints(datumProcessed);
