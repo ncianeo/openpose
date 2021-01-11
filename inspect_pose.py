@@ -5,6 +5,13 @@ from os.path import join, isfile, basename, isdir
 import sys
 
 
+"""
+    키포인트 디텍션
+    argv[1]: 이미지 저장 경로
+
+    데이터 정리가 1차적으로 끝난 png 파일들에 대해서(최하위 레이어만) 키포인트 디텍션을 실행해 키포인트 값들을 json형식으로 저장함.
+    이 파일을 실행하기 위해서는 openpose를 빌드해야함
+"""
 def inspect_path(img_path):
     json_path = join(*img_path.split("/")[-4:-2])
     print(img_path)
